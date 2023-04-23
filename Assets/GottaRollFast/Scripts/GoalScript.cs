@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class GoalScript : MonoBehaviour
+namespace GottaRollFast
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class GoalScript : MonoBehaviour
     {
-        
-        if (collision.gameObject.GetComponent<PlayerControl>() != null)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("PlayerIn");
-            if (!collision.gameObject.GetComponent<PlayerControl>().IsDead)
+
+            if (collision.gameObject.GetComponent<PlayerControl>() != null)
             {
-                if (GameEventManager.instance != null) GameEventManager.instance.StageClear.Invoke();
+                Debug.Log("PlayerIn");
+                if (!collision.gameObject.GetComponent<PlayerControl>().IsDead)
+                {
+                    if (GameEventManager.instance != null) GameEventManager.instance.StageClear.Invoke();
+                }
             }
         }
     }

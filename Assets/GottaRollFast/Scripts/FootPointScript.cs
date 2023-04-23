@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class FootPointScript : MonoBehaviour
+namespace GottaRollFast
 {
-    public PlayerControl playerControl;
-    private void OnCollisionEnter2D(Collision2D collision)
+    public class FootPointScript : MonoBehaviour
     {
-        if (playerControl != null) playerControl.FootStep();
-    }
+        public PlayerControl playerControl;
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (playerControl != null) playerControl.FootStep();
+        }
 
+    }
 }

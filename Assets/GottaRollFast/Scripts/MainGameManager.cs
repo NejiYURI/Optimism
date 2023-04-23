@@ -3,97 +3,103 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
-public class MainGameManager : MonoBehaviour
+namespace GottaRollFast
 {
-    public static MainGameManager instance;
-
-    public CameraFollowScript cameraFollow;
-
-    public Transform StarPos;
-
-    public GameObject PlayerObj;
-
-    public GameObject DeathPanel;
-
-    public GameObject ClearPanel;
-
-    public AudioClip GameClearSound;
-
-    private PlayerInputAction inputActions;
-
-    private bool IsPlayerDeath;
-    private bool IsStageClear;
-
-    private void Awake()
+    public class MainGameManager : MonoBehaviour
     {
-        instance = this;
-        inputActions = new PlayerInputAction();
+        public static MainGameManager instance;
 
-    }
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
+        public string SceneName;
+        public string NextSceneName;
 
+        public CameraFollowScript cameraFollow;
 
-    private void Start()
-    {
-        IsPlayerDeath = true;
-        SpawnPlayer();
-        inputActions.PlayerInput.Retry.performed += _ => SpawnPlayer();
-        inputActions.PlayerInput.Confirm.performed += _ => StageClearConfirm();
-        this.DeathPanel.SetActive(false);
-        this.ClearPanel.SetActive(false);
-        if (GameEventManager.instance != null)
+        public Transform StarPos;
+
+        public GameObject PlayerObj;
+
+        public GameObject DeathPanel;
+
+        public GameObject ClearPanel;
+
+        public AudioClip GameClearSound;
+
+        private PlayerInputAction inputActions;
+
+        private bool IsPlayerDeath;
+        private bool IsStageClear;
+
+        private void Awake()
         {
-            GameEventManager.instance.StageClear.AddListener(StageClear);
-        }
-    }
+            instance = this;
+            inputActions = new PlayerInputAction();
 
-    void SpawnPlayer()
-    {
-        if (IsStageClear)
+        }
+        private void OnEnable()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            return;
+            inputActions.Enable();
         }
-        if (!IsPlayerDeath) return;
-        IsPlayerDeath = false;
-        IsStageClear = false;
-        this.DeathPanel.SetActive(false);
-        this.ClearPanel.SetActive(false);
-        GameObject obj = Instantiate(PlayerObj, StarPos.position, Quaternion.identity);
-        cameraFollow.TargetObj = obj.transform;
-    }
+        private void OnDisable()
+        {
+            inputActions.Disable();
+        }
 
-    public void GameOver()
-    {
-        if (IsStageClear) return;
-        IsPlayerDeath = true;
-        cameraFollow.TargetObj = null;
-        this.DeathPanel.SetActive(true);
-    }
 
-    public void StageClear()
-    {
-        IsStageClear = true;
-        if (AudioController.instance != null) AudioController.instance.PlaySound(GameClearSound, 0.1f);
-        this.ClearPanel.SetActive(true);
-    }
+        private void Start()
+        {
+            IsPlayerDeath = true;
+            SpawnPlayer();
+            inputActions.PlayerInput.Retry.performed += _ => SpawnPlayer();
+            inputActions.PlayerInput.Confirm.performed += _ => StageClearConfirm();
+            this.DeathPanel.SetActive(false);
+            this.ClearPanel.SetActive(false);
+            if (GameEventManager.instance != null)
+            {
+                GameEventManager.instance.StageClear.AddListener(StageClear);
+            }
+        }
 
-    public void StageClearConfirm()
-    {
-        if (!IsStageClear) return;
-        ReturnTitle();
-    }
+        void SpawnPlayer()
+        {
+            if (!IsPlayerDeath || IsStageClear) return;
+            IsPlayerDeath = false;
+            IsStageClear = false;
+            this.DeathPanel.SetActive(false);
+            this.ClearPanel.SetActive(false);
+            GameObject obj = Instantiate(PlayerObj, StarPos.position, Quaternion.identity);
+            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneByName(SceneName));
+            cameraFollow.TargetObj = obj.transform;
+        }
 
-    public void ReturnTitle()
-    {
-        SceneManager.LoadScene("Title");
+        public void GameOver()
+        {
+            if (IsStageClear) return;
+            IsPlayerDeath = true;
+            cameraFollow.TargetObj = null;
+            this.DeathPanel.SetActive(true);
+        }
+
+        public void StageClear()
+        {
+            IsStageClear = true;
+            if (AudioController.instance != null) AudioController.instance.PlaySound(GameClearSound, 0.1f);
+            this.ClearPanel.SetActive(true);
+        }
+
+        public void StageClearConfirm()
+        {
+            if (!IsStageClear) return;
+            if (SceneManagerScript.instance)
+            {
+                SceneManagerScript.instance.LoadSceneAdditive(NextSceneName);
+                SceneManagerScript.instance.UnloadScene(SceneName);
+            }
+        }
+
+        public void ReturnTitle()
+        {
+            SceneManager.LoadScene("Title");
+        }
     }
 }
+

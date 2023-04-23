@@ -5,10 +5,11 @@ using TMPro;
 
 public class TypeGameManger : MonoBehaviour
 {
+    public string ActionId;
     public List<string> CodeList;
     private string CurrentTarget;
-    public Transform CodeBox;
-    public GameObject CodeObj;
+    public CodeBoxScript CodeBox;
+    private bool CanType;
     [Header("UI")]
     public TextMeshProUGUI TargetCode;
     public TextMeshProUGUI TypeCode;
@@ -16,11 +17,18 @@ public class TypeGameManger : MonoBehaviour
     void Start()
     {
         SetCode();
+        if (MainGameEvent.instance) MainGameEvent.instance.ActionSelect.AddListener(ActionSelect);
+    }
+
+    private void ActionSelect(string _id)
+    {
+        CanType = ActionId.Equals(_id);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!CanType) return;
         if (Input.anyKeyDown)
         {
             string inputstr = Input.inputString;
@@ -40,16 +48,12 @@ public class TypeGameManger : MonoBehaviour
                 TypeCode.text = TypeCode.text + input;
                 if (CurrentTarget.Length == 1)
                 {
-                    //if (CodeBox && CodeObj)
-                    //{
-                    //    GameObject newCode = Instantiate(CodeObj, CodeBox);
-                    //    if (newCode.GetComponent<TextMeshProUGUI>()) newCode.GetComponent<TextMeshProUGUI>().text = TargetCode.text;
-                    //}
-                    if (RsltCode)
-                    {
-                        RsltCode.text += "\n" + TargetCode.text;
-                    }
 
+                    //if (RsltCode)
+                    //{
+                    //    RsltCode.text += "\n" + TargetCode.text;
+                    //}
+                    if (CodeBox) CodeBox.AddObj(TargetCode.text);
                     SetCode();
                 }
                 else
