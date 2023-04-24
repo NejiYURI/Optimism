@@ -1315,6 +1315,9 @@ MonoBehaviour:
   MaxProgress: 10
   CurrentProgress: 9.8
   MiniGameObject: {fileID: 1820066690}
+  MiniGameScenes:
+  - AIDriving
+  - Stage1
   MiniGameBtn: {fileID: 924948783}
   WorkBtn: {fileID: 924420789}
   WorkStopBtn: {fileID: 1834486824}

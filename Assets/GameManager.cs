@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Mini Game")]
     public GameObject MiniGameObject;
+    public List<string> MiniGameScenes;
 
     public GameObject MiniGameBtn;
     public GameObject WorkBtn;
@@ -165,7 +166,7 @@ public class GameManager : MonoBehaviour
             if (MiniGameBtn) MiniGameBtn.SetActive(false);
             if (MiniGameObject) MiniGameObject.SetActive(true);
             if (MainGameEvent.instance) MainGameEvent.instance.ActionSelect.Invoke("game");
-            if (SceneManagerScript.instance) SceneManagerScript.instance.LoadSceneAdditive("Stage1");
+            if (SceneManagerScript.instance && MiniGameScenes.Count>0) SceneManagerScript.instance.LoadSceneAdditive(MiniGameScenes[Random.Range(0, MiniGameScenes.Count)]);
             GameCounter = StartCoroutine(MiniGameCounter());
         }
     }

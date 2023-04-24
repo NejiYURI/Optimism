@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ResultScene.unity
     guid: 17164c19d81ecd14288f7179c7a403a3
+  - enabled: 1
+    path: Assets/Scenes/AIDriving.unity
+    guid: bd0c4c79e4572ec4d94ef2723571c07d
   m_configObjects: {}
