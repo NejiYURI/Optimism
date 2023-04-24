@@ -39,6 +39,16 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadScene(string _name)
+    {
+        SceneManager.LoadScene(_name);
+    }
+
     private IEnumerator LoadLevel(string sceneName)
     {
         var asyncLoadLevel = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);

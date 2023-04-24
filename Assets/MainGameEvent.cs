@@ -20,5 +20,11 @@ public class MainGameEvent : MonoBehaviour
 
     public UnityEvent<string> ActionSelect;
 
+    public UnityEvent CodeError;
+
     public UnityEvent CodeComplete;
+
+    public UnityEvent GameStart;
+
+    public UnityEvent GameOver;
 }

@@ -14,15 +14,29 @@ public class TypeGameManger : MonoBehaviour
     public TextMeshProUGUI TargetCode;
     public TextMeshProUGUI TypeCode;
     public TextMeshProUGUI RsltCode;
+
+    public AudioClip TypingSound;
+    public AudioClip CompleteSound;
+    public AudioClip MissSound;
     void Start()
     {
         SetCode();
-        if (MainGameEvent.instance) MainGameEvent.instance.ActionSelect.AddListener(ActionSelect);
+        if (MainGameEvent.instance)
+        {
+            MainGameEvent.instance.ActionSelect.AddListener(ActionSelect);
+            MainGameEvent.instance.GameOver.AddListener(GameOver);
+        }
     }
 
     private void ActionSelect(string _id)
     {
         CanType = ActionId.Equals(_id);
+    }
+
+    void GameOver()
+    {
+        MainGameEvent.instance.ActionSelect.RemoveListener(ActionSelect);
+        CanType = false;
     }
 
     // Update is called once per frame
@@ -39,20 +53,21 @@ public class TypeGameManger : MonoBehaviour
 
     void CodeCheck(string input)
     {
-        if (input.Length > 1) return;
+        if (input.Length > 1 || input.Trim().Length<=0) return;
         if (CurrentTarget.Length > 0)
         {
             if (CurrentTarget[0] == input.ToCharArray()[0])
             {
-
+                if (AudioController.instance) AudioController.instance.PlaySound(TypingSound,0.5f);
                 TypeCode.text = TypeCode.text + input;
                 if (CurrentTarget.Length == 1)
                 {
-
+                    if (MainGameEvent.instance) MainGameEvent.instance.CodeComplete.Invoke();
                     //if (RsltCode)
                     //{
                     //    RsltCode.text += "\n" + TargetCode.text;
                     //}
+                    if (AudioController.instance) AudioController.instance.PlaySound(CompleteSound);
                     if (CodeBox) CodeBox.AddObj(TargetCode.text);
                     SetCode();
                 }
@@ -66,6 +81,11 @@ public class TypeGameManger : MonoBehaviour
                     }
                 }
 
+            }
+            else
+            {
+                if (AudioController.instance) AudioController.instance.PlaySound(MissSound);
+                if (MainGameEvent.instance) MainGameEvent.instance.CodeError.Invoke();
             }
         }
     }
