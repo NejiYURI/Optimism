@@ -108,6 +108,8 @@ public class GameManager : MonoBehaviour
 
     void dayOverFunc(string _content)
     {
+        if (GameCounter != null) StopCoroutine(GameCounter);
+        if (DayTimeCounter != null) StopCoroutine(DayTimeCounter);
         if (PlayerStatus.instance)
         {
             PlayerStatus.instance.CurrentProgress = CurrentProgress;
@@ -117,8 +119,6 @@ public class GameManager : MonoBehaviour
         if (MainGameEvent.instance) MainGameEvent.instance.GameOver.Invoke();
         if (GameUI) GameUI.DayOver(_content);
         if (SceneManagerScript.instance) SceneManagerScript.instance.UnloadCurrentScene();
-        if (GameCounter != null) StopCoroutine(GameCounter);
-        if (DayTimeCounter != null) StopCoroutine(DayTimeCounter);
         if ((DaysLeft - 1) <= 0 || CurrentProgress >= MaxProgress) 
             StartCoroutine(LoadResultScene());
         else

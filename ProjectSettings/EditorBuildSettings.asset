@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Stage3.unity
     guid: c09390ccbc93ac340b6f7fee7dd3087b
   - enabled: 1
+    path: Assets/Scenes/N_GravityTest.unity
+    guid: f4153c19073f8bf44a8455d7e2a42937
+  - enabled: 1
     path: Assets/Scenes/ResultScene.unity
     guid: 17164c19d81ecd14288f7179c7a403a3
   - enabled: 1

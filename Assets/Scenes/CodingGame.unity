@@ -833,7 +833,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -634896773
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 717799023, guid: b169b1841447a5e4ca1ba43d5bc78151, type: 3}
   m_Color: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
@@ -1316,6 +1316,7 @@ MonoBehaviour:
   CurrentProgress: 9.8
   MiniGameObject: {fileID: 1820066690}
   MiniGameScenes:
+  - N_GravityTest
   - AIDriving
   - Stage1
   MiniGameBtn: {fileID: 924948783}
@@ -2434,7 +2435,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -634896773
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -526133091, guid: b169b1841447a5e4ca1ba43d5bc78151, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3802,7 +3803,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -634896773
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -526133091, guid: b169b1841447a5e4ca1ba43d5bc78151, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4138,7 +4139,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -634896773
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 717799023, guid: b169b1841447a5e4ca1ba43d5bc78151, type: 3}
   m_Color: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
